@@ -1,0 +1,38 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- colorAccent -->
+        <item name="colorAccent">@color/signature_orange</item>
+
+        <!-- status bar -->
+        <item name="android:statusBarColor">@color/signature_orange_dark</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- action bar -->
+        <item name="windowActionBar">false</item> <!-- no action bar -->
+        <item name="windowNoTitle">true</item> <!-- no action bar -->
+        <item name="colorPrimary">@color/signature_orange</item> <!-- action bar color -->
+        <item name="elevation">0dp</item> <!-- remove shadow -->
+
+        <!-- text -->
+        <item name="android:textSize">@dimen/text_size_default</item>
+
+        <!-- window -->
+        <item name="android:windowBackground">@android:color/white</item>
+
+        <!-- ripple effect -->
+        <item name="colorControlHighlight">@color/signature_orange_dark</item>
+    </style>
+
+    <style name="AppTheme.TabLayoutStyle">
+        <item name="tabIndicatorHeight">4dp</item>
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabRippleColor">@null</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabTextAppearance">@style/TabTextAppearance</item>
+    </style>
+
+    <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textStyle">bold</item>
+        <item name="textAllCaps">false</item>
+    </style>
+</resources>
