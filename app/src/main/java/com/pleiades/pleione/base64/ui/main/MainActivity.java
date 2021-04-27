@@ -1,5 +1,6 @@
 package com.pleiades.pleione.base64.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -14,16 +15,21 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.pleiades.pleione.base64.R;
 
+import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
+    SectionsPagerAdapter sectionsPagerAdapter;
+    ViewPager viewPager;
+    String externalInput;
+    boolean isExternalInputBase64;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        ViewPager viewPager = findViewById(R.id.pager);
+        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.layout_tab);
         tabs.setupWithViewPager(viewPager);
@@ -44,23 +50,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // TODO
-        // https://stackoverflow.com/questions/35608721/how-to-add-custom-item-on-global-long-press-contextmenu-like-translate-and-wikip/38539059
-        // https://stackoverflow.com/questions/8571501/how-to-check-whether-a-string-is-base64-encoded-or-not
         // initialize intent
-//        Intent intent = getIntent();
-//        if (intent != null) {
-//            // clear the intent to prevent again receiving on resuming main
-//            setIntent(new Intent());
-//
-//            if (intent.getAction().equals(Intent.ACTION_PROCESS_TEXT) && intent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
-//                String input = intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT);
-//                Base64.
-//            }
-//        }
+        Intent intent = getIntent();
+        if (intent != null) {
+            if (intent.getAction().equals(Intent.ACTION_PROCESS_TEXT) && intent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
+                externalInput = intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT);
+                isExternalInputBase64 = Base64.isBase64(externalInput);
+                viewPager.setCurrentItem(isExternalInputBase64 ? 1 : 0);
+            }
+        }
     }
 
-    static class SectionsPagerAdapter extends FragmentPagerAdapter {
+    class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         // constructor
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -70,7 +71,13 @@ public class MainActivity extends AppCompatActivity {
         @NotNull
         @Override
         public Fragment getItem(int position) {
-            return PlaceholderFragment.newInstance(position);
+            if (externalInput != null)
+                if ((position == 0 && !isExternalInputBase64) || position == 1 && isExternalInputBase64) {
+                    Fragment fragment = PlaceholderFragment.newInstance(position, externalInput);
+                    externalInput = null;
+                    return fragment;
+                }
+            return PlaceholderFragment.newInstance(position, null);
         }
 
         @Nullable

@@ -23,19 +23,21 @@ import java.util.Base64;
 import static android.content.Context.CLIPBOARD_SERVICE;
 
 public class PlaceholderFragment extends Fragment {
-    private Context context;
+    private static final String ARG_INDEX = "index";
+    private static final String ARG_INPUT = "input";
 
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private Context context;
     private int index;
 
     private PageViewModel pageViewModel;
     private EditText inputEditText;
     private TextView outputTextView;
 
-    public static PlaceholderFragment newInstance(int index) {
+    public static PlaceholderFragment newInstance(int index, String input) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, index);
+        bundle.putInt(ARG_INDEX, index);
+        bundle.putString(ARG_INPUT, input);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -45,9 +47,13 @@ public class PlaceholderFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         pageViewModel = new ViewModelProvider(this).get(PageViewModel.class);
-        if (getArguments() != null) {
-            index = getArguments().getInt(ARG_SECTION_NUMBER);
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            index = arguments.getInt(ARG_INDEX);
+            String externalInput = arguments.getString(ARG_INPUT);
+
             pageViewModel.setHint(getString(index == 0 ? R.string.hint_encode : R.string.hint_decode));
+            pageViewModel.setExternalInput(externalInput);
         }
     }
 
@@ -56,14 +62,20 @@ public class PlaceholderFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
         inputEditText = root.findViewById(R.id.input);
-        outputTextView = root.findViewById(R.id.output);
-
         pageViewModel.getHint().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 inputEditText.setHint(s);
             }
         });
+        pageViewModel.getExternalInput().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                inputEditText.setText(s);
+            }
+        });
+
+        outputTextView = root.findViewById(R.id.output);
         pageViewModel.getOutput().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
@@ -83,6 +95,7 @@ public class PlaceholderFragment extends Fragment {
     public void convert() {
         String input = inputEditText.getText().toString();
         String output = index == 0 ? encode(input) : decode(input);
+        pageViewModel.setExternalInput(null);
         pageViewModel.setOutput(output);
 
         ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
