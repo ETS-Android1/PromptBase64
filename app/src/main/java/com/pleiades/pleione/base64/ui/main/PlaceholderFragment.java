@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pleiades.pleione.base64.R;
@@ -65,26 +63,11 @@ public class PlaceholderFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
         inputEditText = root.findViewById(R.id.input);
-        pageViewModel.getHint().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                inputEditText.setHint(s);
-            }
-        });
-        pageViewModel.getExternalInput().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                inputEditText.setText(s);
-            }
-        });
+        pageViewModel.getHint().observe(this, s -> inputEditText.setHint(s));
+        pageViewModel.getExternalInput().observe(this, s -> inputEditText.setText(s));
 
         outputEditText = root.findViewById(R.id.output);
-        pageViewModel.getOutput().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                outputEditText.setText(s);
-            }
-        });
+        pageViewModel.getOutput().observe(this, s -> outputEditText.setText(s));
 
         return root;
     }
