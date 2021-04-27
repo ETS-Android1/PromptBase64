@@ -2,10 +2,12 @@ package com.pleiades.pleione.base64.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -28,6 +30,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        View appbar = findViewById(R.id.appbar);
+        Toolbar toolbar = appbar.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -59,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(isExternalInputBase64 ? 1 : 0);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     class SectionsPagerAdapter extends FragmentPagerAdapter {

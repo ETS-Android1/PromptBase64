@@ -7,18 +7,16 @@
     tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="?actionBarSize"
-            android:layout_marginStart="@dimen/margin_default"
-            android:gravity="center"
-            android:text="@string/label_application"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_large"
-            android:textStyle="bold" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:titleTextAppearance="@style/AppTheme.BlueToolbarTitleTextAppearance"
+            app:contentInsetStartWithNavigation="0dp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/layout_tab"

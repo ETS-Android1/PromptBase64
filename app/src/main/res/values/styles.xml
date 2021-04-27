@@ -10,6 +10,8 @@
         <!-- action bar -->
         <item name="windowActionBar">false</item> <!-- no action bar -->
         <item name="windowNoTitle">true</item> <!-- no action bar -->
+        <item name="actionOverflowMenuStyle">@style/ActionOverflowMenuStyle</item> <!-- action bar popup menu -->
+        <item name="actionOverflowButtonStyle">@style/ActionOverflowButtonStyle</item> <!-- sets the style for the overflow button -->
         <item name="colorPrimary">@color/signature_orange</item> <!-- action bar color -->
         <item name="elevation">0dp</item> <!-- remove shadow -->
 
@@ -31,8 +33,23 @@
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
     </style>
 
+    <style name="AppTheme.BlueToolbarTitleTextAppearance">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textStyle">bold</item>
         <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="ActionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@android:color/white</item>
+    </style>
+
+    <style name="ActionOverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
+        <item name="elevation">0dp</item>
+        <item name="android:popupElevation">0dp</item>
     </style>
 </resources>
