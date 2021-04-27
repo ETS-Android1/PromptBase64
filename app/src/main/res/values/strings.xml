@@ -9,5 +9,5 @@
     <string name="setting_title_clipboard">Copy Data to Clipboard</string>
     <string name="setting_title_link">Open URL</string>
     <string name="setting_contents_clipboard">Copy the result to the clipboard.</string>
-    <string name="setting_contents_link">Launch browser if the result starts with http.</string>
+    <string name="setting_contents_link">Launch browser if the decoded data starts with http.</string>
 </resources>

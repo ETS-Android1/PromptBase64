@@ -3,12 +3,14 @@ package com.pleiades.pleione.base64.ui.main;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,13 +25,14 @@ import java.util.Base64;
 import static android.content.Context.CLIPBOARD_SERVICE;
 import static com.pleiades.pleione.base64.ui.Configs.ARG_INDEX;
 import static com.pleiades.pleione.base64.ui.Configs.ARG_INPUT;
+import static com.pleiades.pleione.base64.ui.Configs.KEY_CLIPBOARD;
+import static com.pleiades.pleione.base64.ui.Configs.KEY_LINK;
 
 public class PlaceholderFragment extends Fragment {
     private Context context;
 
     private PageViewModel pageViewModel;
-    private EditText inputEditText;
-    private TextView outputTextView;
+    private EditText inputEditText, outputEditText;
 
     private int index;
 
@@ -75,11 +78,11 @@ public class PlaceholderFragment extends Fragment {
             }
         });
 
-        outputTextView = root.findViewById(R.id.output);
+        outputEditText = root.findViewById(R.id.output);
         pageViewModel.getOutput().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                outputTextView.setText(s);
+                outputEditText.setText(s);
             }
         });
 
@@ -99,10 +102,18 @@ public class PlaceholderFragment extends Fragment {
         pageViewModel.setOutput(output);
 
         if (output != null) {
-            ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-            ClipData clipData = ClipData.newPlainText("output", output);
-            clipboardManager.setPrimaryClip(clipData);
+            SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+            if (prefs.getBoolean(KEY_CLIPBOARD, true)) {
+                ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("output", output);
+                clipboardManager.setPrimaryClip(clipData);
+            }
+            if (output.startsWith("http") && prefs.getBoolean(KEY_LINK, true)) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(output));
+                startActivity(intent);
+            }
         }
+
     }
 
     private String encode(String input) {
