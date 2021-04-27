@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -53,6 +54,16 @@ public class SettingsActivity extends AppCompatActivity {
         settingRecyclerView.setLayoutManager(linearLayoutManager);
         SettingRecyclerAdapter settingAdapter = new SettingRecyclerAdapter();
         settingRecyclerView.setAdapter(settingAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home)
+            onBackPressed();
+
+        return super.onOptionsItemSelected(item);
     }
 
     private class SettingRecyclerAdapter extends RecyclerView.Adapter<SettingRecyclerAdapter.SettingViewHolder> {
