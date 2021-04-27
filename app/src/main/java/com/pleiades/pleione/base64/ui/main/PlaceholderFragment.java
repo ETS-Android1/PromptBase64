@@ -98,9 +98,11 @@ public class PlaceholderFragment extends Fragment {
         pageViewModel.setExternalInput(null);
         pageViewModel.setOutput(output);
 
-        ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clipData = ClipData.newPlainText("output", output);
-        clipboardManager.setPrimaryClip(clipData);
+        if (output != null) {
+            ClipboardManager clipboardManager = (ClipboardManager) context.getSystemService(CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("output", output);
+            clipboardManager.setPrimaryClip(clipData);
+        }
     }
 
     private String encode(String input) {
@@ -108,7 +110,11 @@ public class PlaceholderFragment extends Fragment {
     }
 
     private String decode(String input) {
-        return new String(Base64.getDecoder().decode(input));
+        try {
+            return new String(Base64.getDecoder().decode(input));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
     }
 
     @Override
