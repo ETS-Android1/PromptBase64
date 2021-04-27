@@ -3,8 +3,10 @@ package com.pleiades.pleione.base64.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,13 +18,14 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.pleiades.pleione.base64.R;
+import com.pleiades.pleione.base64.ui.SettingsActivity;
 
 import org.apache.commons.codec.binary.Base64;
 import org.jetbrains.annotations.NotNull;
 
 public class MainActivity extends AppCompatActivity {
-    SectionsPagerAdapter sectionsPagerAdapter;
     ViewPager viewPager;
+
     String externalInput;
     boolean isExternalInputBase64;
 
@@ -31,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View appbar = findViewById(R.id.appbar);
-        Toolbar toolbar = appbar.findViewById(R.id.toolbar);
+        View appbar = findViewById(R.id.appbar_main);
+        Toolbar toolbar = appbar.findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.layout_tab);
@@ -72,6 +75,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     class SectionsPagerAdapter extends FragmentPagerAdapter {

@@ -24,6 +24,9 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/label_settings"/>
     </application>
 
 </manifest>

@@ -4,7 +4,7 @@
     tools:context="com.pleiades.pleione.pixivdownloader.ui.activity.MainActivity">
 
     <item
-        android:id="@+id/setting"
+        android:id="@+id/action_settings"
         android:title="@string/label_settings"
         app:showAsAction="never" />
 

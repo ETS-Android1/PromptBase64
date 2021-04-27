@@ -33,7 +33,7 @@
         <item name="tabTextAppearance">@style/TabTextAppearance</item>
     </style>
 
-    <style name="AppTheme.BlueToolbarTitleTextAppearance">
+    <style name="AppTheme.ToolbarTitleTextAppearance">
         <item name="android:textSize">@dimen/text_size_large</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textStyle">bold</item>

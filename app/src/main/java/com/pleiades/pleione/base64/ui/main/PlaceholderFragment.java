@@ -21,17 +21,17 @@ import com.pleiades.pleione.base64.R;
 import java.util.Base64;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
+import static com.pleiades.pleione.base64.ui.Configs.ARG_INDEX;
+import static com.pleiades.pleione.base64.ui.Configs.ARG_INPUT;
 
 public class PlaceholderFragment extends Fragment {
-    private static final String ARG_INDEX = "index";
-    private static final String ARG_INPUT = "input";
-
     private Context context;
-    private int index;
 
     private PageViewModel pageViewModel;
     private EditText inputEditText;
     private TextView outputTextView;
+
+    private int index;
 
     public static PlaceholderFragment newInstance(int index, String input) {
         PlaceholderFragment fragment = new PlaceholderFragment();

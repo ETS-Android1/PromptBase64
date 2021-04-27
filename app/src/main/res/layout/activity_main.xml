@@ -7,15 +7,15 @@
     tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
+        android:id="@+id/appbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:titleTextAppearance="@style/AppTheme.BlueToolbarTitleTextAppearance"
+            app:titleTextAppearance="@style/AppTheme.ToolbarTitleTextAppearance"
             app:contentInsetStartWithNavigation="0dp" />
 
         <com.google.android.material.tabs.TabLayout
