@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 public class PageViewModel extends ViewModel {
     private final MutableLiveData<String> hint = new MutableLiveData<>();
-    private final MutableLiveData<String> externalInput = new MutableLiveData<>();
+    private final MutableLiveData<String> input = new MutableLiveData<>();
     private final MutableLiveData<String> output = new MutableLiveData<>();
 
     public void setHint(String hint) {
@@ -17,12 +17,12 @@ public class PageViewModel extends ViewModel {
         return hint;
     }
 
-    public void setExternalInput(String externalInput) {
-        this.externalInput.setValue(externalInput);
+    public void setInput(String input) {
+        this.input.setValue(input);
     }
 
-    public LiveData<String> getExternalInput() {
-        return externalInput;
+    public LiveData<String> getInput() {
+        return input;
     }
 
     public void setOutput(String output) {

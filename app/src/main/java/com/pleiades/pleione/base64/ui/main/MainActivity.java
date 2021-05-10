@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,11 +25,9 @@ import org.apache.commons.codec.binary.Base64;
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
 
 public class MainActivity extends AppCompatActivity {
-    SectionsPagerAdapter sectionsPagerAdapter;
-    ViewPager viewPager;
+    private ViewPager viewPager;
 
-    String externalInput;
-    boolean isExternalInputBase64;
+    public static String externalInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +38,18 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = appbar.findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
-        sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.layout_tab);
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
-
         fab.setOnClickListener(view -> {
-            int index = viewPager.getCurrentItem();
-            PlaceholderFragment fragment = (PlaceholderFragment) sectionsPagerAdapter.instantiateItem(viewPager, index);
-
-            fragment.convert();
+            // TODO
+//            int index = viewPager.getCurrentItem();
+//            PlaceholderFragment fragment = (PlaceholderFragment) sectionsPagerAdapter.instantiateItem(viewPager, index);
+//
+//            fragment.convert();
         });
     }
 
@@ -61,12 +59,14 @@ public class MainActivity extends AppCompatActivity {
 
         // initialize intent
         Intent intent = getIntent();
+
+        // clear intent to prevent receiving Main again
+//        setIntent(new Intent());
+
         if (intent != null) {
             if (intent.getAction().equals(Intent.ACTION_PROCESS_TEXT) && intent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
                 externalInput = intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT);
-                isExternalInputBase64 = Base64.isBase64(externalInput);
-                int index = isExternalInputBase64 ? 1 : 0;
-                viewPager.setCurrentItem(index);
+                viewPager.setCurrentItem(Base64.isBase64(externalInput) ? 1 : 0);
             }
         }
     }
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class SectionsPagerAdapter extends FragmentStatePagerAdapter{
+    private static class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(@NonNull FragmentManager fm, int behavior) {
             super(fm, behavior);
@@ -97,12 +97,6 @@ public class MainActivity extends AppCompatActivity {
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            if (externalInput != null)
-                if ((position == 0 && !isExternalInputBase64) || position == 1 && isExternalInputBase64) {
-                    Fragment fragment = PlaceholderFragment.newInstance(position, externalInput);
-                    externalInput = null;
-                    return fragment;
-                }
             return PlaceholderFragment.newInstance(position, null);
         }
 
@@ -117,35 +111,4 @@ public class MainActivity extends AppCompatActivity {
             return 2;
         }
     }
-
-//    private class SectionsPagerAdapter extends FragmentPagerAdapter {
-//
-//        // constructor
-//        public SectionsPagerAdapter(FragmentManager fm) {
-//            super(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-//        }
-//
-//        @NotNull
-//        @Override
-//        public Fragment getItem(int position) {
-//            if (externalInput != null)
-//                if ((position == 0 && !isExternalInputBase64) || position == 1 && isExternalInputBase64) {
-//                    Fragment fragment = PlaceholderFragment.newInstance(position, externalInput);
-//                    externalInput = null;
-//                    return fragment;
-//                }
-//            return PlaceholderFragment.newInstance(position, null);
-//        }
-//
-//        @Nullable
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//            return position == 0 ? "ENCODE" : "DECODE";
-//        }
-//
-//        @Override
-//        public int getCount() {
-//            return 2;
-//        }
-//    }
 }
