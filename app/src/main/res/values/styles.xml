@@ -29,6 +29,10 @@
         <item name="colorControlNormal">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.SplashTheme">
+        <item name="android:statusBarColor">@android:color/white</item>
+    </style>
+
     <style name="AppTheme.TabLayoutStyle">
         <item name="tabIndicatorHeight">4dp</item>
         <item name="tabIndicatorColor">@android:color/white</item>

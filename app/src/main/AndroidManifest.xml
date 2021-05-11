@@ -11,9 +11,10 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
+        <!-- splash -->
         <activity
-            android:name="com.pleiades.pleione.base64.ui.main.MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:name=".ui.SplashActivity"
+            android:theme="@style/AppTheme.SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -24,9 +25,20 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
+
+        <!-- main -->
+        <activity
+            android:name="com.pleiades.pleione.base64.ui.main.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+
+        <!-- settings -->
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/label_settings"/>
+            android:label="@string/label_settings" />
     </application>
 
 </manifest>

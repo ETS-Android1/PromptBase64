@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pleiades.pleione.base64.R;
+import com.pleiades.pleione.base64.Variables;
 
 import java.util.Base64;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
-import static com.pleiades.pleione.base64.ui.Configs.ARG_INDEX;
-import static com.pleiades.pleione.base64.ui.Configs.KEY_CLIPBOARD;
-import static com.pleiades.pleione.base64.ui.Configs.KEY_LINK;
+import static com.pleiades.pleione.base64.Configs.ARG_INDEX;
+import static com.pleiades.pleione.base64.Configs.KEY_CLIPBOARD;
+import static com.pleiades.pleione.base64.Configs.KEY_LINK;
 
 public class PlaceholderFragment extends Fragment {
     private Context context;
@@ -72,12 +72,11 @@ public class PlaceholderFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if (MainActivity.externalInput != null) {
-            pageViewModel.setInput(MainActivity.externalInput);
-            MainActivity.externalInput = null;
+        if (Variables.externalInput != null) {
+            pageViewModel.setInput(Variables.externalInput);
+            Variables.externalInput = null;
         }
         inputEditText.requestFocus();
-        Log.d("onresume", "fragment onresume, index : " + index);
     }
 
     public void convert() {

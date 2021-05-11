@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.pleiades.pleione.base64.R;
+import com.pleiades.pleione.base64.Variables;
 import com.pleiades.pleione.base64.ui.SettingsActivity;
 
 import org.apache.commons.codec.binary.Base64;
@@ -26,8 +27,6 @@ import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ON
 
 public class MainActivity extends AppCompatActivity {
     private ViewPager viewPager;
-
-    public static String externalInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +44,9 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> {
-            // TODO
-//            int index = viewPager.getCurrentItem();
-//            PlaceholderFragment fragment = (PlaceholderFragment) sectionsPagerAdapter.instantiateItem(viewPager, index);
-//
-//            fragment.convert();
+            int index = viewPager.getCurrentItem();
+            PlaceholderFragment fragment = (PlaceholderFragment) sectionsPagerAdapter.instantiateItem(viewPager, index);
+            fragment.convert();
         });
     }
 
@@ -57,18 +54,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // initialize intent
-        Intent intent = getIntent();
-
-        // clear intent to prevent receiving Main again
-//        setIntent(new Intent());
-
-        if (intent != null) {
-            if (intent.getAction().equals(Intent.ACTION_PROCESS_TEXT) && intent.hasExtra(Intent.EXTRA_PROCESS_TEXT)) {
-                externalInput = intent.getStringExtra(Intent.EXTRA_PROCESS_TEXT);
-                viewPager.setCurrentItem(Base64.isBase64(externalInput) ? 1 : 0);
-            }
-        }
+        if (Variables.externalInput != null)
+            viewPager.setCurrentItem(Base64.isBase64(Variables.externalInput) ? 1 : 0);
     }
 
     @Override

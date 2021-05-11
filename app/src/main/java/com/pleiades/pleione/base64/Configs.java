@@ -1,4 +1,4 @@
-package com.pleiades.pleione.base64.ui;
+package com.pleiades.pleione.base64;
 
 public class Configs {
     public static final String ARG_INDEX = "index";

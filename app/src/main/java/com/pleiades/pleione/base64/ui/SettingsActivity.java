@@ -22,10 +22,10 @@ import com.pleiades.pleione.base64.R;
 
 import java.util.ArrayList;
 
-import static com.pleiades.pleione.base64.ui.Configs.KEY_CLIPBOARD;
-import static com.pleiades.pleione.base64.ui.Configs.KEY_LINK;
-import static com.pleiades.pleione.base64.ui.Configs.SETTING_TYPE_CLIPBOARD;
-import static com.pleiades.pleione.base64.ui.Configs.SETTING_TYPE_LINK;
+import static com.pleiades.pleione.base64.Configs.KEY_CLIPBOARD;
+import static com.pleiades.pleione.base64.Configs.KEY_LINK;
+import static com.pleiades.pleione.base64.Configs.SETTING_TYPE_CLIPBOARD;
+import static com.pleiades.pleione.base64.Configs.SETTING_TYPE_LINK;
 
 public class SettingsActivity extends AppCompatActivity {
     private ArrayList<Integer> settingTypeList;
